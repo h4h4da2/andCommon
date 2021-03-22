@@ -1,0 +1,3 @@
+rootProject.name = "AndCommon"
+include ':app'
+include ':libs'
