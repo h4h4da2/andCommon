@@ -75,4 +75,24 @@ dependencies {
 
     api 'com.qmuiteam:qmui:2.0.0-alpha10'
 
+    // retrofit
+    def retrofit_version = '2.5.0'
+    // okhttp
+    def okhttp_version = '3.12.0'
+    // rx
+    def rxjava_version = '2.2.8'
+    def rxandroid_version = '2.1.1'
+
+
+    // retrofit
+    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    api "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // okhttp
+    api "com.squareup.okhttp3:okhttp:$okhttp_version"
+    api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    // rxjava
+    api "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
 }

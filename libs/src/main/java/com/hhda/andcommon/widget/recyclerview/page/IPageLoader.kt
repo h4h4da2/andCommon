@@ -4,5 +4,4 @@ interface IPageLoader {
 
     fun doLoad(page: IPage)
 
-
 }

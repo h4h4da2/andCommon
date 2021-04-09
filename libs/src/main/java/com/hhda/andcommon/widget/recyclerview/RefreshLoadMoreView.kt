@@ -10,6 +10,7 @@ import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
 import com.hhda.andcommon.widget.interfaces.IViewRender
 import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
 import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
+import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPageHandler
 import com.hhda.andcommon.widget.statusview.IStatus
 
 
@@ -20,8 +21,6 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
     var enableRefresh: Boolean = true
     var enableLoadMore: Boolean = true
-
-    private var mPageLoader: IPageLoader? = null
 
     //空布局渲染
     private var mEmptyViewRender: IViewRender? = null
@@ -56,19 +55,17 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
 
-    fun setPageLoader(pageLoader: IPageLoader) {
-        this.mPageLoader = pageLoader
+    fun setDefaultPageHandler(pageLoader: IPageLoader) {
+        this.mPageHandler = CommonPageHandler(this, pageLoader)
     }
 
     fun initConfig() {
         binding.refreshLayout.setDefaultRefreshHeaderAndFooter(context)
         binding.refreshLayout.setOnRefreshListener {
-//            mPageHandler?.getPage()?.let { mPageLoader?.doLoad(it) }
-            mPageHandler?.onLoadBegin()
+            mPageHandler?.onLoadStart()
         }
         binding.refreshLayout.setOnLoadMoreListener {
-//            mPageHandler?.getPage()?.let { mPageLoader?.doLoad(it) }
-            mPageHandler?.onLoadBegin()
+            mPageHandler?.onLoadStart()
         }
         binding.refreshLayout.setEnableRefresh(enableRefresh)
         binding.refreshLayout.setEnableLoadMore(enableLoadMore)
@@ -85,14 +82,8 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         binding.recyclerView.setDiffData(data)
     }
 
-    fun onReqLoading() {
-        mPageHandler?.onLoadBegin()
-    }
-
     fun refresh() {
-        mPageHandler?.onLoadBegin()
-//        mPageHandler?.getPage()?.let { mPageLoader?.doLoad(it) }
-
+        mPageHandler?.onLoadStart()
     }
 
     fun onReqComplete(data: List<Any>?, err: Any?) {
@@ -109,9 +100,9 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         binding.statusView.showContent()
     }
 
-    fun showErr() {
+    fun showErr(err: Any?) {
         if (binding.statusView.hasStatus(IStatus.ERROR)) {
-            binding.statusView.showEmpty(mErrorViewRender)
+//            binding.statusView.shower()
         }
     }
 

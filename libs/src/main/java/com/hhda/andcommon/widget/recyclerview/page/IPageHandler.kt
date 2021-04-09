@@ -2,7 +2,7 @@ package com.hhda.andcommon.widget.recyclerview.page
 
 interface IPageHandler {
 
-    fun onLoadBegin()
+    fun onLoadStart()
 
     fun onLoadComplete(data: List<Any>?, error: Any?)
 
