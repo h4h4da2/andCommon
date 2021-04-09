@@ -1,4 +1,4 @@
-package com.hhda.andcommon.list
+package com.hhda.andcommon.widget.recyclerview
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseBinderAdapter
 import java.util.*
 
 
-fun RecyclerView.quickBindAdapter(lm: RecyclerView.LayoutManager? = null): BaseBinderAdapter {
+fun RecyclerView.quickInitAdapter(lm: RecyclerView.LayoutManager? = null): BaseBinderAdapter {
     layoutManager = lm ?: LinearLayoutManager(context)
     itemAnimator = null
     adapter = BaseBinderAdapter()
