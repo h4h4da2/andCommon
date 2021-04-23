@@ -21,13 +21,16 @@ class CommonPageHandler(
     override fun onLoadStart() {
         val isLoading = refreshLoadMoreView.binding.refreshLayout.isRefreshing
         if (mPage.isLoadFirstPage() && !isLoading) {
-            refreshLoadMoreView.binding.refreshLayout.autoRefresh(0, 0, 0f, true)
+            refreshLoadMoreView.binding.refreshLayout.autoRefreshAnimationOnly()
         }
         doLoadData()
     }
 
 
     override fun onLoadComplete(data: List<Any>?, error: Any?) {
+//        if (refreshLoadMoreView.binding.refreshLayout.isRefreshing) {
+//            refreshLoadMoreView.binding.refreshLayout.finishRefresh()
+//        }
         //加载失败情况
         if (error != null) {
             if (mPage.isLoadFirstPage()) {
@@ -51,9 +54,10 @@ class CommonPageHandler(
             refreshLoadMoreView.setData(mData)
             if (mPage.isLoadFirstPage()) {
 
-                refreshLoadMoreView.binding.refreshLayout.finishRefresh(400)
+                refreshLoadMoreView.binding.refreshLayout.finishRefresh(0)
                 if (data.isNullOrEmpty()) {
                     refreshLoadMoreView.showEmpty()
+                    refreshLoadMoreView.binding.recyclerView.scrollToPosition(0)
                 } else {
                     refreshLoadMoreView.showContent()
                 }

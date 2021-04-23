@@ -37,7 +37,7 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     lateinit var binding: AcViewRefreshLoadLayoutBinding
 
     init {
-        binding = AcViewRefreshLoadLayoutBinding.inflate(LayoutInflater.from(context), this, false)
+        binding = AcViewRefreshLoadLayoutBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
     fun setEmptyView(emptyLayout: Int, render: IViewRender? = null) {
@@ -91,13 +91,13 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
     fun showEmpty() {
-        if (binding.statusView.hasStatus(IStatus.EMPTY)) {
-            binding.statusView.showEmpty(mEmptyViewRender)
-        }
+//        if (binding.statusView.hasStatus(IStatus.EMPTY)) {
+//            binding.statusView.showEmpty(mEmptyViewRender)
+//        }
     }
 
     fun showContent() {
-        binding.statusView.showContent()
+//        binding.statusView.showContent()
     }
 
     fun showErr(err: Any?) {

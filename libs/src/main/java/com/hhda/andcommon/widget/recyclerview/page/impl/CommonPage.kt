@@ -19,6 +19,14 @@ data class CommonPage(
         return pageIndex
     }
 
+    override fun nextPage(): IPage {
+        return this.copy(pageIndex = pageIndex + 1)
+    }
+
+    override fun isFirstPage(): Boolean {
+        return pageIndex == DEF_START_INDEX - 1
+    }
+
     fun isLoadFirstPage(): Boolean {
         return pageIndex == DEF_START_INDEX - 1
     }

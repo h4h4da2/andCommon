@@ -82,6 +82,10 @@ class StatusView @JvmOverloads constructor(
         addStatus(IStatus.EMPTY, layout, apply)
     }
 
+    fun getViewByStatus(status: IStatus): View? {
+        return statusManager.getViewByStatus(status)
+    }
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {

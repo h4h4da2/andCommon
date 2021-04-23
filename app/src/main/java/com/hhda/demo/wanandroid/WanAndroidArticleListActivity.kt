@@ -7,6 +7,9 @@ import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
 import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPage
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
+import com.hhda.demo.network.NetClient
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * WanAndroid 首页文章列表页
@@ -20,6 +23,7 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         R.layout.activity_wan_android_article_list
         binding = ActivityWanAndroidArticleListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initViews()
         initData()
@@ -27,21 +31,33 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+
+
+        binding.rlView.initConfig()
+        binding.rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
         binding.rlView.setDefaultPageHandler(object : IPageLoader {
             override fun doLoad(page: IPage) {
                 fetchData(page)
             }
         })
-        binding.rlView.initConfig()
     }
 
     private fun initData() {
         binding.rlView.refresh()
 
+
     }
 
     fun fetchData(page: IPage) {
         if (page !is CommonPage) return
+        val subscribe = NetClient.getArticleService().getHomePageArticle(page.pageIndex)
+            .subscribeOn(Schedulers.io())
+            .map { it.data?.datas ?: emptyList() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                binding.rlView.onReqComplete(it, null)
+
+            }
 
 
     }

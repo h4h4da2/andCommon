@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.binder.BaseItemBinder
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hhda.demo.R
+import com.hhda.demo.dto.ArticleDTO
 
 class WanAndroidArticleBinder :
-    BaseItemBinder<WanAndroidArticleBinder.ArticleItem, BaseViewHolder>() {
+    BaseItemBinder<ArticleDTO, BaseViewHolder>() {
 
 
-    override fun convert(holder: BaseViewHolder, data: ArticleItem) {
-
+    override fun convert(holder: BaseViewHolder, data: ArticleDTO) {
+        holder.setText(R.id.tvTile, data.chapterName)
+        holder.setText(R.id.tvUser, data.author)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -21,31 +23,4 @@ class WanAndroidArticleBinder :
         return BaseViewHolder(itemView)
     }
 
-    data class ArticleItem(
-        val apkLink: String,
-        val author: String,
-        val chapterId: Int,
-        val chapterName: String,
-        val collect: Boolean,
-        val courseId: Int,
-        val desc: String,
-        val descMd: String,
-        val envelopePic: String,
-        val fresh: Boolean,
-        val link: String,
-        val niceDate: String,
-        val niceShareDate: String,
-        val projectLink: String,
-        val publishTime: Long,
-        val realSuperChapterId: Int,
-        val shareUser: String,
-        val superChapterId: Int,
-        val superChapterName: String,
-        val tags: List<Any>,
-        val title: String,
-        val type: Int,
-        val userId: Int,
-        val visible: Int,
-        val zan: Int
-    )
 }
