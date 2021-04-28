@@ -10,6 +10,7 @@ import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
 import com.hhda.andcommon.widget.interfaces.IViewRender
 import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
 import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
+import com.hhda.andcommon.widget.recyclerview.page.IPageManager
 import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPageHandler
 import com.hhda.andcommon.widget.statusview.IStatus
 
@@ -55,17 +56,17 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
 
-    fun setDefaultPageHandler(pageLoader: IPageLoader) {
-        this.mPageHandler = CommonPageHandler(this, pageLoader)
+    fun setDefaultPageHandler(pageLoader: IPageLoader, pageManager: IPageManager) {
+        this.mPageHandler = CommonPageHandler(this, pageLoader, pageManager)
     }
 
     fun initConfig() {
         binding.refreshLayout.setDefaultRefreshHeaderAndFooter(context)
         binding.refreshLayout.setOnRefreshListener {
-            mPageHandler?.onLoadStart()
+            mPageHandler?.onLoadStart(true)
         }
         binding.refreshLayout.setOnLoadMoreListener {
-            mPageHandler?.onLoadStart()
+            mPageHandler?.onLoadStart(false)
         }
         binding.refreshLayout.setEnableRefresh(enableRefresh)
         binding.refreshLayout.setEnableLoadMore(enableLoadMore)
@@ -83,26 +84,25 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
     fun refresh() {
-        mPageHandler?.onLoadStart()
+        mPageHandler?.onLoadStart(true)
     }
 
-    fun onReqComplete(data: List<Any>?, err: Any?) {
-        mPageHandler?.onLoadComplete(data, err)
+    fun onReqComplete(result:Any? , err: Any?) {
+        mPageHandler?.onLoadComplete(result, err)
     }
 
     fun showEmpty() {
-//        if (binding.statusView.hasStatus(IStatus.EMPTY)) {
-//            binding.statusView.showEmpty(mEmptyViewRender)
-//        }
+        if (binding.statusView.hasStatus(IStatus.EMPTY)) {
+            binding.statusView.showEmpty(mEmptyViewRender)
+        }
     }
 
     fun showContent() {
-//        binding.statusView.showContent()
+        binding.statusView.showContent()
     }
 
     fun showErr(err: Any?) {
         if (binding.statusView.hasStatus(IStatus.ERROR)) {
-//            binding.statusView.shower()
         }
     }
 

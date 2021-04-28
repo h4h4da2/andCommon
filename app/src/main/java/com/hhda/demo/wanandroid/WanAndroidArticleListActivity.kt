@@ -2,12 +2,12 @@ package com.hhda.demo.wanandroid
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.hhda.andcommon.widget.recyclerview.page.IPage
 import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
-import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPage
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
+import com.hhda.demo.wanandroid.page.WanAndroidPage
+import com.hhda.demo.wanandroid.page.WanAndroidPageManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -32,27 +32,25 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
     private fun initViews() {
 
-
         binding.rlView.initConfig()
         binding.rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
         binding.rlView.setDefaultPageHandler(object : IPageLoader {
-            override fun doLoad(page: IPage) {
+            override fun doLoad(page: Any) {
                 fetchData(page)
             }
-        })
+        }, WanAndroidPageManager())
     }
 
     private fun initData() {
         binding.rlView.refresh()
 
-
     }
 
-    fun fetchData(page: IPage) {
-        if (page !is CommonPage) return
-        val subscribe = NetClient.getArticleService().getHomePageArticle(page.pageIndex)
+    fun fetchData(page: Any) {
+        if (page !is WanAndroidPage) return
+        val subscribe = NetClient.getArticleService().getHomePageArticle(page.curPage)
             .subscribeOn(Schedulers.io())
-            .map { it.data?.datas ?: emptyList() }
+            .map { it.data!! }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 binding.rlView.onReqComplete(it, null)

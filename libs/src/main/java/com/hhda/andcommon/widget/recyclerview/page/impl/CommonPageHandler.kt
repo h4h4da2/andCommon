@@ -1,6 +1,7 @@
 package com.hhda.andcommon.widget.recyclerview.page.impl
 
 import com.hhda.andcommon.widget.recyclerview.RefreshLoadMoreView
+import com.hhda.andcommon.widget.recyclerview.page.IPageManager
 
 
 import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
@@ -11,29 +12,33 @@ import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
  */
 class CommonPageHandler(
     private val refreshLoadMoreView: RefreshLoadMoreView,
-    private val pageLoader: IPageLoader
+    private val pageLoader: IPageLoader,
+    private val pageManager: IPageManager
 ) : IPageHandler {
-
-    private var mPage: CommonPage = CommonPage()
 
     var mData: List<Any> = emptyList()
 
-    override fun onLoadStart() {
+    override fun onLoadStart(isRefresh: Boolean) {
+
         val isLoading = refreshLoadMoreView.binding.refreshLayout.isRefreshing
-        if (mPage.isLoadFirstPage() && !isLoading) {
+
+        if (isRefresh) {
+            //重置 nextPage
+            pageManager.onRefresh()
+        }
+        if (isRefresh && !isLoading) {
             refreshLoadMoreView.binding.refreshLayout.autoRefreshAnimationOnly()
         }
         doLoadData()
     }
 
+    override fun onLoadComplete(result: Any?, error: Any?) {
 
-    override fun onLoadComplete(data: List<Any>?, error: Any?) {
-//        if (refreshLoadMoreView.binding.refreshLayout.isRefreshing) {
-//            refreshLoadMoreView.binding.refreshLayout.finishRefresh()
-//        }
+        val pageData = pageManager.handleResult(result, error)
+
         //加载失败情况
         if (error != null) {
-            if (mPage.isLoadFirstPage()) {
+            if (pageData.isFirstPage) {
                 refreshLoadMoreView.showErr(error)
             } else {
                 refreshLoadMoreView.binding.refreshLayout.finishLoadMore(false)
@@ -42,20 +47,20 @@ class CommonPageHandler(
         } else {
             //加载成功的情况
 
-            if (mPage.isLoadFirstPage()) {
+            if (pageData.isFirstPage) {
                 mData = emptyList()
             }
-            if (!data.isNullOrEmpty()) {
+            if (pageData.pageList != null) {
                 val tmpList = mData.toMutableList()
-                tmpList.addAll(data)
+                tmpList.addAll(pageData.pageList)
                 mData = tmpList
             }
 
             refreshLoadMoreView.setData(mData)
-            if (mPage.isLoadFirstPage()) {
+            if (pageData.isFirstPage) {
 
-                refreshLoadMoreView.binding.refreshLayout.finishRefresh(0)
-                if (data.isNullOrEmpty()) {
+                refreshLoadMoreView.binding.refreshLayout.finishRefresh(true)
+                if (pageData.pageList.isNullOrEmpty()) {
                     refreshLoadMoreView.showEmpty()
                     refreshLoadMoreView.binding.recyclerView.scrollToPosition(0)
                 } else {
@@ -63,23 +68,22 @@ class CommonPageHandler(
                 }
             } else {
                 refreshLoadMoreView.showContent()
-                val hasMore = !data.isNullOrEmpty() && data.size >= CommonPage.DEF_PAGE_SIZE
-                if (hasMore) {
+
+                if (pageData.hasMore) {
                     refreshLoadMoreView.binding.refreshLayout.finishLoadMore(true)
                 } else {
                     refreshLoadMoreView.binding.refreshLayout.finishLoadMoreWithNoMoreData()
                 }
             }
 
-            val curPage = mPage.copy(pageIndex = mPage.pageIndex + 1)
-            mPage = curPage
-
         }
 
     }
 
+
     private fun doLoadData() {
-        val nextPage = mPage.copy(pageIndex = mPage.pageIndex + 1)
+        val nextPage = pageManager.getNextPage()
+        nextPage ?: return
         pageLoader.doLoad(nextPage)
     }
 
