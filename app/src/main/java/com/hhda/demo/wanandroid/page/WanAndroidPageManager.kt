@@ -4,15 +4,20 @@ import com.hhda.andcommon.widget.recyclerview.page.IPageManager
 import com.hhda.andcommon.widget.recyclerview.page.PageData
 import com.hhda.demo.dto.PageResult
 
-class WanAndroidPageManager : IPageManager {
+class WanAndroidPageManager(private val loadFunc: (Any) -> Unit) : IPageManager {
 
-    var mPage = WanAndroidPage(0)
-    override fun getNextPage(): Any? {
+    companion object {
+        const val FIRST_INDEX = 0
+    }
+
+    var mPage = WanAndroidPage(FIRST_INDEX - 1)
+
+    private fun getNextPage(): Any {
         return mPage.copy(curPage = mPage.curPage + 1)
     }
 
     override fun handleResult(data: Any?, err: Any?): PageData {
-        val isFirstPage = mPage.curPage == -1
+        val isFirstPage = mPage.curPage == FIRST_INDEX - 1
         if (err != null) {
             return PageData(isFirstPage = isFirstPage, null, true, err)
         }
@@ -29,7 +34,11 @@ class WanAndroidPageManager : IPageManager {
         throw Throwable("未知类型")
     }
 
-    override fun onRefresh() {
-        mPage = WanAndroidPage(-1)
+    override fun resetPage() {
+        mPage = WanAndroidPage(FIRST_INDEX - 1)
+    }
+
+    override fun loadNextPage() {
+        loadFunc(getNextPage())
     }
 }

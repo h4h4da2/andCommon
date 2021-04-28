@@ -2,7 +2,6 @@ package com.hhda.demo.wanandroid
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
@@ -34,11 +33,7 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
         binding.rlView.initConfig()
         binding.rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
-        binding.rlView.setDefaultPageHandler(object : IPageLoader {
-            override fun doLoad(page: Any) {
-                fetchData(page)
-            }
-        }, WanAndroidPageManager())
+        binding.rlView.setDefaultPageHandler(WanAndroidPageManager(::fetchData))
     }
 
     private fun initData() {
@@ -46,11 +41,17 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
     }
 
-    fun fetchData(page: Any) {
+    private fun fetchData(page: Any) {
         if (page !is WanAndroidPage) return
         val subscribe = NetClient.getArticleService().getHomePageArticle(page.curPage)
             .subscribeOn(Schedulers.io())
             .map { it.data!! }
+            .map {
+                if (page.curPage >= 5) {
+                    it.over = true
+                }
+                it
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 binding.rlView.onReqComplete(it, null)

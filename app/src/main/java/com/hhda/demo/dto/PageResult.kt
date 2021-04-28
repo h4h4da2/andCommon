@@ -1,7 +1,7 @@
 package com.hhda.demo.dto
 
-data class PageResult<T>(
-    val datas: List<T>?,
-    val curPage: Int,
-    val over: Boolean
+class PageResult<T>(
+    var datas: List<T>?,
+    var curPage: Int,
+    var over: Boolean
 )

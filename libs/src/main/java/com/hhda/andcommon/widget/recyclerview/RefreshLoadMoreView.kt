@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseBinderAdapter
 import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
 import com.hhda.andcommon.widget.interfaces.IViewRender
 import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
-import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
 import com.hhda.andcommon.widget.recyclerview.page.IPageManager
 import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPageHandler
 import com.hhda.andcommon.widget.statusview.IStatus
@@ -56,8 +55,8 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
 
-    fun setDefaultPageHandler(pageLoader: IPageLoader, pageManager: IPageManager) {
-        this.mPageHandler = CommonPageHandler(this, pageLoader, pageManager)
+    fun setDefaultPageHandler(pageManager: IPageManager) {
+        this.mPageHandler = CommonPageHandler(this, pageManager)
     }
 
     fun initConfig() {
@@ -87,7 +86,7 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         mPageHandler?.onLoadStart(true)
     }
 
-    fun onReqComplete(result:Any? , err: Any?) {
+    fun onReqComplete(result: Any?, err: Any?) {
         mPageHandler?.onLoadComplete(result, err)
     }
 

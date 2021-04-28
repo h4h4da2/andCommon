@@ -5,14 +5,12 @@ import com.hhda.andcommon.widget.recyclerview.page.IPageManager
 
 
 import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
-import com.hhda.andcommon.widget.recyclerview.page.IPageLoader
 
 /**
  * 常规业务下的分页处理
  */
 class CommonPageHandler(
     private val refreshLoadMoreView: RefreshLoadMoreView,
-    private val pageLoader: IPageLoader,
     private val pageManager: IPageManager
 ) : IPageHandler {
 
@@ -24,12 +22,12 @@ class CommonPageHandler(
 
         if (isRefresh) {
             //重置 nextPage
-            pageManager.onRefresh()
+            pageManager.resetPage()
         }
         if (isRefresh && !isLoading) {
             refreshLoadMoreView.binding.refreshLayout.autoRefreshAnimationOnly()
         }
-        doLoadData()
+        pageManager.loadNextPage()
     }
 
     override fun onLoadComplete(result: Any?, error: Any?) {
@@ -77,14 +75,6 @@ class CommonPageHandler(
             }
 
         }
-
-    }
-
-
-    private fun doLoadData() {
-        val nextPage = pageManager.getNextPage()
-        nextPage ?: return
-        pageLoader.doLoad(nextPage)
     }
 
 }

@@ -2,13 +2,20 @@ package com.hhda.andcommon.widget.recyclerview.page
 
 interface IPageManager {
 
-    /**
-     * 获取下一分页
-     */
-    fun getNextPage(): Any?
 
+    /**
+     * 处理请求结果
+     */
     fun handleResult(data: Any?, err: Any?): PageData
 
-    fun onRefresh()
+    /**
+     * 刷新，重置page
+     */
+    fun resetPage()
+
+    /**
+     * 加载下一页
+     */
+    fun loadNextPage()
 
 }
