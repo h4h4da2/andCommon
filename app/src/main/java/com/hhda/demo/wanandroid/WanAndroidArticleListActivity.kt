@@ -47,15 +47,13 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .map { it.data!! }
             .map {
-                if (page.curPage >= 5) {
-                    it.over = true
+                it.apply {
+                    if (curPage >= 5) over = true
                 }
-                it
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 binding.rlView.onReqComplete(it, null)
-
             }
 
 
