@@ -1,10 +1,10 @@
-package com.hhda.andcommon.widget.recyclerview.page.impl
+package com.hhda.andcommon.widget.recyclerview.v1.page.impl
 
-import com.hhda.andcommon.widget.recyclerview.RefreshLoadMoreView
-import com.hhda.andcommon.widget.recyclerview.page.IPageManager
+import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
+import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
 
 
-import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
+import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
 
 /**
  * 常规业务下的分页处理
@@ -18,13 +18,11 @@ class CommonPageHandler(
 
     override fun onLoadStart(isRefresh: Boolean) {
 
-        val isLoading = refreshLoadMoreView.binding.refreshLayout.isRefreshing
-
         if (isRefresh) {
             //重置 nextPage
             pageManager.resetPage()
         }
-        if (isRefresh && !isLoading) {
+        if (isRefresh && !refreshLoadMoreView.binding.refreshLayout.isRefreshing) {
             refreshLoadMoreView.binding.refreshLayout.autoRefreshAnimationOnly()
         }
         pageManager.loadNextPage()

@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.squareview
+package com.hhda.andcommon.widget.squareview.v1
 
 import android.content.Context
 import android.util.AttributeSet

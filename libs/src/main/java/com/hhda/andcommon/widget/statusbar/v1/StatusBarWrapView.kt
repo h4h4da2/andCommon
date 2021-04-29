@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.statusbar
+package com.hhda.andcommon.widget.statusbar.v1
 
 import android.content.Context
 import android.util.AttributeSet

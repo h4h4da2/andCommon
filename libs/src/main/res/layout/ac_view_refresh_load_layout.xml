@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hhda.andcommon.widget.statusview.StatusView
+    <com.hhda.andcommon.widget.statusview.v1.StatusView
         android:id="@+id/statusView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:overScrollMode="never" />
 
-    </com.hhda.andcommon.widget.statusview.StatusView>
+    </com.hhda.andcommon.widget.statusview.v1.StatusView>
 
 
 </com.scwang.smart.refresh.layout.SmartRefreshLayout>

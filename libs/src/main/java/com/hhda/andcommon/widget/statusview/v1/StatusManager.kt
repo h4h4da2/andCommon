@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.statusview
+package com.hhda.andcommon.widget.statusview.v1
 
 import android.view.LayoutInflater
 import android.view.View

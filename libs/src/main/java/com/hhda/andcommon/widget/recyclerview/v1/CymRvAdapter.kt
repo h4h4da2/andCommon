@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.recyclerview
+package com.hhda.andcommon.widget.recyclerview.v1
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

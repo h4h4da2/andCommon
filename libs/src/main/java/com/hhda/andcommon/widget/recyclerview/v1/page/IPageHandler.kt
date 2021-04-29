@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.recyclerview.page
+package com.hhda.andcommon.widget.recyclerview.v1.page
 
 interface IPageHandler {
 

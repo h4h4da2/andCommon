@@ -1,4 +1,4 @@
-package com.hhda.andcommon.widget.recyclerview
+package com.hhda.andcommon.widget.recyclerview.v1
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
 import com.hhda.andcommon.widget.interfaces.IViewRender
-import com.hhda.andcommon.widget.recyclerview.page.IPageHandler
-import com.hhda.andcommon.widget.recyclerview.page.IPageManager
-import com.hhda.andcommon.widget.recyclerview.page.impl.CommonPageHandler
-import com.hhda.andcommon.widget.statusview.IStatus
+import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
+import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
+import com.hhda.andcommon.widget.recyclerview.v1.page.impl.CommonPageHandler
+import com.hhda.andcommon.widget.statusview.v1.IStatus
 
 
 class RefreshLoadMoreView @JvmOverloads constructor(
