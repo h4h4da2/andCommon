@@ -23,14 +23,18 @@ fun RecyclerView.getBinderAdapter(): BaseBinderAdapter? {
 }
 
 
-fun RecyclerView.setDiffData(dataList: Collection<Any>) {
+fun RecyclerView.setDiffData(dataList: Collection<Any>, isRefresh: Boolean) {
 
-    when (dataList) {
-        is List<Any> -> {
-            this.getBinderAdapter()?.setDiffNewData(ArrayList(dataList))
-        }
-        is MutableList<Any> -> {
-            this.getBinderAdapter()?.setDiffNewData(dataList)
-        }
+    var tempList = dataList
+    if (tempList !is MutableList<Any>) {
+        tempList = ArrayList(dataList)
     }
+    if (isRefresh) {
+        this.getBinderAdapter()?.getDiffer()?.submitList(tempList as MutableList<Any>) {
+            layoutManager?.scrollToPosition(0)
+        }
+    } else {
+        this.getBinderAdapter()?.setDiffNewData(tempList as MutableList<Any>)
+    }
+
 }

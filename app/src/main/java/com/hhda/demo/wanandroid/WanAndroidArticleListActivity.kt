@@ -2,6 +2,7 @@ package com.hhda.demo.wanandroid
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.arch.core.util.Function
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
@@ -31,8 +32,24 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
     private fun initViews() {
 
-        binding.rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
-        binding.rlView.setDefaultPageHandler(WanAndroidPageManager(::fetchData))
+        with(binding) {
+            rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
+            rlView.setDefaultPageHandler(WanAndroidPageManager(::fetchData))
+
+
+            removeBtn.setOnClickListener { removeOper() }
+        }
+    }
+
+    private fun removeOper() {
+        binding.rlView.onDataChange(object : Function<List<Any>, List<Any>> {
+            override fun apply(input: List<Any>?): List<Any> {
+                if (input == null) return emptyList()
+                val newList = input.toMutableList()
+                newList.removeAt(0)
+                return newList
+            }
+        })
     }
 
     private fun initData() {

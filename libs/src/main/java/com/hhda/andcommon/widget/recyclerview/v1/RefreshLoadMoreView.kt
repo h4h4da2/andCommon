@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.arch.core.util.Function
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
@@ -93,9 +94,10 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         return binding.recyclerView.getBinderAdapter()!!
     }
 
-    fun setData(data: List<Any>) {
-        binding.recyclerView.setDiffData(data)
+    fun setData(data: List<Any>, needScroll2Top: Boolean) {
+        binding.recyclerView.setDiffData(data, needScroll2Top)
     }
+
 
     fun refresh() {
         mPageHandler?.onLoadStart(true)
@@ -127,6 +129,10 @@ class RefreshLoadMoreView @JvmOverloads constructor(
                 }
             })
         }
+    }
+
+    fun onDataChange(reduce: Function<List<Any>, List<Any>>) {
+        mPageHandler?.onDataChange(reduce)
     }
 
     interface ViewRender {

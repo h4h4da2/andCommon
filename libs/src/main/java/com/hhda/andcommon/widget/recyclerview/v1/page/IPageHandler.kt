@@ -6,5 +6,7 @@ interface IPageHandler {
 
     fun onLoadComplete(result: Any?, error: Any?)
 
+    fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>)
+
 
 }

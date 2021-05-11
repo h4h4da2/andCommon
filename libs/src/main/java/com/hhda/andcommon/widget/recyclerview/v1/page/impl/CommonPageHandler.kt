@@ -1,10 +1,9 @@
 package com.hhda.andcommon.widget.recyclerview.v1.page.impl
 
+
 import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
-import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
-
-
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
+import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
 
 /**
  * 常规业务下的分页处理
@@ -52,17 +51,18 @@ class CommonPageHandler(
                 mData = tmpList
             }
 
-            refreshLoadMoreView.setData(mData)
+
             if (pageData.isFirstPage) {
 
+                refreshLoadMoreView.setData(mData, true)
                 refreshLoadMoreView.binding.refreshLayout.finishRefresh(true)
                 if (pageData.pageList.isNullOrEmpty()) {
                     refreshLoadMoreView.showEmpty()
-                    refreshLoadMoreView.binding.recyclerView.scrollToPosition(0)
                 } else {
                     refreshLoadMoreView.showContent()
                 }
             } else {
+                refreshLoadMoreView.setData(mData, false)
                 refreshLoadMoreView.showContent()
 
                 if (pageData.hasMore) {
@@ -73,6 +73,11 @@ class CommonPageHandler(
             }
 
         }
+    }
+
+    override fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>) {
+        mData = reduce.apply(mData)
+        refreshLoadMoreView.setData(mData, false)
     }
 
 }
