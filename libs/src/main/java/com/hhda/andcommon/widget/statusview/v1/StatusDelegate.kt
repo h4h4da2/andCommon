@@ -1,9 +1,9 @@
 package com.hhda.andcommon.widget.statusview.v1
 
-import com.hhda.andcommon.widget.interfaces.IViewRender
+import android.view.View
 
 data class StatusDelegate(
     val status: IStatus,
     val layout: Int,
-    val apply: IViewRender? = null
+    val view: View?
 )

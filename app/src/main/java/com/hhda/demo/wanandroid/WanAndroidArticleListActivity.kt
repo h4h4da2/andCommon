@@ -31,14 +31,12 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
     private fun initViews() {
 
-        binding.rlView.initConfig()
         binding.rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
         binding.rlView.setDefaultPageHandler(WanAndroidPageManager(::fetchData))
     }
 
     private fun initData() {
         binding.rlView.refresh()
-
     }
 
     private fun fetchData(page: Any) {

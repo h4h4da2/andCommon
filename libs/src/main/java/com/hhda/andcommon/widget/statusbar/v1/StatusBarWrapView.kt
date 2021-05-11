@@ -17,6 +17,4 @@ class StatusBarWrapView @JvmOverloads constructor(
             setPadding(0, statusBarHeight, paddingRight, paddingBottom)
         }
     }
-
-
 }

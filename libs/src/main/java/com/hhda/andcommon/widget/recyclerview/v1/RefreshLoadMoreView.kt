@@ -3,11 +3,12 @@ package com.hhda.andcommon.widget.recyclerview.v1
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
-import com.hhda.andcommon.widget.interfaces.IViewRender
+import com.hhda.andcommon.widget.statusview.v1.IViewRender
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
 import com.hhda.andcommon.widget.recyclerview.v1.page.impl.CommonPageHandler
@@ -19,16 +20,17 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
 
-    var enableRefresh: Boolean = true
-    var enableLoadMore: Boolean = true
+    private var mEnableRefresh: Boolean = true
+    private var mEnableLoadMore: Boolean = true
 
     //空布局渲染
-    private var mEmptyViewRender: IViewRender? = null
+    private var mEmptyViewRender: ViewRender? = null
 
     //错误布局渲染
-    private var mErrorViewRender: IViewRender? = null
+    private var mErrorViewRender: ViewRender? = null
 
-    private var lm: RecyclerView.LayoutManager? = null
+    //如果不设置 layoutManager 默认使用LinearLayoutManager
+    private var mLayoutManager: RecyclerView.LayoutManager? = null
 
     private var mPageHandler: IPageHandler? = null
 
@@ -37,21 +39,34 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     lateinit var binding: AcViewRefreshLoadLayoutBinding
 
     init {
-        binding = AcViewRefreshLoadLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+        binding = AcViewRefreshLoadLayoutBinding.inflate(
+            LayoutInflater.from(context), this, true
+        )
+        binding.refreshLayout.setOnRefreshListener {
+            mPageHandler?.onLoadStart(true)
+        }
+        binding.refreshLayout.setOnLoadMoreListener {
+            mPageHandler?.onLoadStart(false)
+        }
+        //设置刷新头和loadMore 样式
+        binding.refreshLayout.setDefaultRefreshHeaderAndFooter(context)
+
+
     }
 
-    fun setEmptyView(emptyLayout: Int, render: IViewRender? = null) {
+    fun setEmptyView(emptyLayout: Int, render: ViewRender? = null) {
         mEmptyViewRender = render
-        binding.statusView.addEmptyStatus(emptyLayout, render)
+        binding.statusView.addEmptyStatus(emptyLayout)
     }
 
-    fun setErrorView(errLayout: Int, render: IViewRender? = null) {
+    fun setErrorView(errLayout: Int, render: ViewRender? = null) {
         mErrorViewRender = render
-        binding.statusView.addStatus(IStatus.ERROR, errLayout, render)
+        binding.statusView.addStatus(IStatus.ERROR, errLayout)
     }
 
-    fun initRecyclerView(lm: RecyclerView.LayoutManager) {
-        binding.recyclerView.quickInitAdapter(lm)
+    fun setLayoutManger(lm: RecyclerView.LayoutManager) {
+        this.mLayoutManager = lm
+        binding.recyclerView.quickInitAdapter(mLayoutManager)
     }
 
 
@@ -59,21 +74,21 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         this.mPageHandler = CommonPageHandler(this, pageManager)
     }
 
-    fun initConfig() {
-        binding.refreshLayout.setDefaultRefreshHeaderAndFooter(context)
-        binding.refreshLayout.setOnRefreshListener {
-            mPageHandler?.onLoadStart(true)
-        }
-        binding.refreshLayout.setOnLoadMoreListener {
-            mPageHandler?.onLoadStart(false)
-        }
-        binding.refreshLayout.setEnableRefresh(enableRefresh)
-        binding.refreshLayout.setEnableLoadMore(enableLoadMore)
+
+    fun setRefreshEnable(enable: Boolean) {
+        this.mEnableRefresh = enable
+        binding.refreshLayout.setEnableRefresh(mEnableRefresh)
+    }
+
+    fun setLoadMoreEnable(enable: Boolean) {
+        this.mEnableLoadMore = enable
+        binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
+
     }
 
     fun getAdapter(): BaseBinderAdapter {
         if (binding.recyclerView.getBinderAdapter() == null) {
-            binding.recyclerView.quickInitAdapter(lm)
+            binding.recyclerView.quickInitAdapter(mLayoutManager)
         }
         return binding.recyclerView.getBinderAdapter()!!
     }
@@ -92,7 +107,11 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
     fun showEmpty() {
         if (binding.statusView.hasStatus(IStatus.EMPTY)) {
-            binding.statusView.showEmpty(mEmptyViewRender)
+            binding.statusView.showEmpty(object : IViewRender {
+                override fun render(view: View) {
+                    mEmptyViewRender?.render(view, null)
+                }
+            })
         }
     }
 
@@ -102,7 +121,16 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
     fun showErr(err: Any?) {
         if (binding.statusView.hasStatus(IStatus.ERROR)) {
+            binding.statusView.setStatus(IStatus.ERROR, object : IViewRender {
+                override fun render(view: View) {
+                    mErrorViewRender?.render(view, err)
+                }
+            })
         }
+    }
+
+    interface ViewRender {
+        fun render(view: View, data: Any?)
     }
 
 

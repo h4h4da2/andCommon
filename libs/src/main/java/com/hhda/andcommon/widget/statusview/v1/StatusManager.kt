@@ -36,13 +36,12 @@ class StatusManager {
 
         val item = statusDelegateList.find { it.status == state }
         val layoutRes = item?.layout ?: -1
-        val oper = item?.apply
+
         if (layoutRes < 0) {
             return null
         }
         val createdView = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
         viewCachePool[state] = createdView
-        oper?.render(createdView, null)
 
         return createdView
 

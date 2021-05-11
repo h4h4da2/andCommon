@@ -79,7 +79,7 @@ dependencies {
     // retrofit
     def retrofit_version = '2.5.0'
     // okhttp
-    def okhttp_version = '3.12.0'
+    def okhttp_version = '4.9.1'
     // rx
     def rxjava_version = '2.2.8'
     def rxandroid_version = '2.1.1'

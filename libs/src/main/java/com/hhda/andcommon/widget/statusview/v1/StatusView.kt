@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.*
-import com.hhda.andcommon.widget.interfaces.IViewRender
 
 /**
  * 多状态展示view
@@ -22,8 +21,8 @@ class StatusView @JvmOverloads constructor(
         StatusManager()
     }
 
-    fun addStatus(status: IStatus, layout: Int, apply: IViewRender? = null) = apply {
-        statusManager.addStatus(StatusDelegate(status, layout, apply))
+    fun addStatus(status: IStatus, layout: Int) = apply {
+        statusManager.addStatus(StatusDelegate(status, layout, null))
     }
 
 
@@ -60,12 +59,15 @@ class StatusView @JvmOverloads constructor(
             addView(curView)
         }
         curView?.visibility = visibility
-        curView?.let { apply?.render(curView, null) }
+        curView?.let { apply?.render(curView) }
 
         return curView
     }
 
-    fun showEmpty(apply: IViewRender? = null): View? = setStatus(IStatus.EMPTY, apply = apply)
+    fun showEmpty(apply: IViewRender? = null) {
+        setStatus(status = IStatus.EMPTY, apply = apply)
+    }
+
 
     fun showContent() {
         for (i in 0 until childCount) {
@@ -78,8 +80,8 @@ class StatusView @JvmOverloads constructor(
         }
     }
 
-    fun addEmptyStatus(layout: Int, apply: IViewRender? = null) = apply {
-        addStatus(IStatus.EMPTY, layout, apply)
+    fun addEmptyStatus(layout: Int) = apply {
+        addStatus(IStatus.EMPTY, layout)
     }
 
     fun getViewByStatus(status: IStatus): View? {

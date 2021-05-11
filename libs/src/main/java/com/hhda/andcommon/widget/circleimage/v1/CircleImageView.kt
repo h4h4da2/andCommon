@@ -19,9 +19,11 @@ class CircleImageView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
+
     fun render(imageUrl: String, @Px corner: Int, isCircle: Boolean) {
         render(Glide.with(this).load(imageUrl), corner, isCircle)
     }
+
 
     fun render(@DrawableRes imageUrl: Int, @Px corner: Int, isCircle: Boolean) {
         render(Glide.with(this).load(imageUrl), corner, isCircle)
