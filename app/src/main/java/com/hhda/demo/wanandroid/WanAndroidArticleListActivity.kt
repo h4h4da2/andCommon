@@ -1,8 +1,10 @@
 package com.hhda.demo.wanandroid
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.arch.core.util.Function
+import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
@@ -27,6 +29,10 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
 
         initViews()
         initData()
+        binding.refreshBtn.setOnClickListener {
+            binding.rlView.refresh()
+        }
+
 
     }
 
@@ -35,16 +41,26 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
         with(binding) {
             rlView.getAdapter().addItemBinder(WanAndroidArticleBinder())
             rlView.setDefaultPageHandler(WanAndroidPageManager(::fetchData))
-
-
             removeBtn.setOnClickListener { removeOper() }
         }
+
+        binding.rlView.setEmptyView(R.layout.view_wanandorid_list_empty,
+            object : RefreshLoadMoreView.ViewRender {
+                override fun render(view: View, data: Any?) {
+                    view.setOnClickListener {
+                        binding.rlView.refresh()
+                    }
+                }
+            }
+        )
+
+//        binding.rlView.showEmpty()
     }
 
     private fun removeOper() {
         binding.rlView.onDataChange(object : Function<List<Any>, List<Any>> {
             override fun apply(input: List<Any>?): List<Any> {
-                if (input == null) return emptyList()
+                if (input.isNullOrEmpty()) return emptyList()
                 val newList = input.toMutableList()
                 newList.removeAt(0)
                 return newList
@@ -53,7 +69,7 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        binding.rlView.refresh()
+//        binding.rlView.refresh()
     }
 
     private fun fetchData(page: Any) {

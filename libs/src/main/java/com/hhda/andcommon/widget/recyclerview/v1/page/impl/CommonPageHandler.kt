@@ -13,7 +13,7 @@ class CommonPageHandler(
     private val pageManager: IPageManager
 ) : IPageHandler {
 
-    var mData: List<Any> = emptyList()
+    private var mData: List<Any> = emptyList()
 
     override fun onLoadStart(isRefresh: Boolean) {
 
@@ -71,8 +71,8 @@ class CommonPageHandler(
                     refreshLoadMoreView.binding.refreshLayout.finishLoadMoreWithNoMoreData()
                 }
             }
-
         }
+
     }
 
     override fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>) {

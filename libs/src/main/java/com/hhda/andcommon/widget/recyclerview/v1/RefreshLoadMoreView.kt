@@ -51,8 +51,17 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         }
         //设置刷新头和loadMore 样式
         binding.refreshLayout.setDefaultRefreshHeaderAndFooter(context)
+        //初始阶段不允许 加载更多
+        binding.refreshLayout.setEnableLoadMore(false)
 
+    }
 
+    fun getEnableRefreshFlag(): Boolean {
+        return mEnableRefresh
+    }
+
+    fun getEnableLoadMoreFlag(): Boolean {
+        return mEnableLoadMore
     }
 
     fun setEmptyView(emptyLayout: Int, render: ViewRender? = null) {
@@ -83,8 +92,6 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
     fun setLoadMoreEnable(enable: Boolean) {
         this.mEnableLoadMore = enable
-        binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
-
     }
 
     fun getAdapter(): BaseBinderAdapter {
@@ -100,10 +107,12 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
 
     fun refresh() {
-        mPageHandler?.onLoadStart(true)
+        binding.refreshLayout.autoRefresh()
+        binding.refreshLayout.setEnableLoadMore(false)
     }
 
     fun onReqComplete(result: Any?, err: Any?) {
+        binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
         mPageHandler?.onLoadComplete(result, err)
     }
 
