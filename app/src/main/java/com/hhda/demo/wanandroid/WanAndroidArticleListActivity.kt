@@ -1,5 +1,7 @@
 package com.hhda.demo.wanandroid
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,13 @@ import io.reactivex.schedulers.Schedulers
  * 列表测试页面
  */
 class WanAndroidArticleListActivity : AppCompatActivity() {
+
+    companion object {
+        fun route(ctx: Context) {
+            val intent = Intent(ctx, WanAndroidArticleListActivity::class.java)
+            ctx.startActivity(intent)
+        }
+    }
 
     private lateinit var binding: ActivityWanAndroidArticleListBinding
 

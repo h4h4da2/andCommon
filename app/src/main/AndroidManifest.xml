@@ -22,11 +22,21 @@
 
 
         <activity android:name=".wanandroid.WanAndroidArticleListActivity">
+
+        </activity>
+
+        <activity android:name=".pagerdemo.PagerDemoActivity">
+
+        </activity>
+
+
+        <activity android:name=".RouterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
