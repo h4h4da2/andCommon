@@ -35,6 +35,7 @@ class CommonPageHandler(
         if (error != null) {
             if (pageData.isFirstPage) {
                 refreshLoadMoreView.showErr(error)
+                refreshLoadMoreView.binding.refreshLayout.finishRefresh(false)
             } else {
                 refreshLoadMoreView.binding.refreshLayout.finishLoadMore(false)
             }
