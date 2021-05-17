@@ -6,7 +6,7 @@
 
 1. #### 关于本项目
 
-   - 对以前项目内的组件进行整理，进行二次封装，方便之后快速立项迭代。使用了wanAndroid 网站提供的api作为数据源，进行相关的测试，开发以及数据展示（感谢wanAndroid网站）。
+   - 对以前项目内的组件进行整理，进行二次封装，方便之后快速立项迭代。
    - 对于一些新框架尝鲜和探索。
 
 2. #### 项目内的组件
@@ -20,7 +20,7 @@
    
 3. #### 引用
 
-   ~~~groovy
+
    ```
    allprojects {
    	repositories {
@@ -33,5 +33,5 @@
    
        implementation 'com.github.h4h4da2:andCommon:version'
    }
-   ~~~
+   ```
 

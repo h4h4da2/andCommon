@@ -78,7 +78,7 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-//        binding.rlView.refresh()
+        binding.rlView.refresh()
     }
 
     private fun fetchData(page: Any) {
