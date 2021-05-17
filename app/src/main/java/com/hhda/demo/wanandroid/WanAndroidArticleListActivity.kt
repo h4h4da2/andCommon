@@ -92,9 +92,12 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe({
                 binding.rlView.onReqComplete(it, null)
-            }
+            },
+                {
+                    binding.rlView.onReqComplete(null, it)
+                })
 
 
     }
