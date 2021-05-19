@@ -1,7 +1,10 @@
 package com.hhda.demo
 
+import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.hhda.demo.databinding.ActivityRouterBinding
 import com.hhda.demo.pagerdemo.PagerDemoActivity
 import com.hhda.demo.wanandroid.WanAndroidArticleListActivity
@@ -18,6 +21,11 @@ class RouterActivity : AppCompatActivity() {
         R.layout.activity_router
 
         initClicks()
+        req()
+    }
+
+    private fun req() {
+
     }
 
     private fun initClicks() {

@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.blankj.utilcode.util.PermissionUtils
 import com.hhda.andcommon.R
 import com.hhda.demo.databinding.ActivityMainBinding
 
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -32,8 +35,6 @@ class MainActivity : AppCompatActivity() {
 //        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-
-
 
 
 }

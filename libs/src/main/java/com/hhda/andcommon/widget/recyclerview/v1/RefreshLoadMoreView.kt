@@ -107,7 +107,7 @@ class RefreshLoadMoreView @JvmOverloads constructor(
 
 
     fun refresh() {
-        binding.refreshLayout.autoRefresh()
+        binding.refreshLayout.autoRefresh(0, 300, 1f, false)
         binding.refreshLayout.setEnableLoadMore(false)
     }
 
