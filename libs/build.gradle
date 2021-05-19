@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.github.dcendents.android-maven'
+    id 'maven-publish'
 }
 
 android {
@@ -102,4 +103,20 @@ dependencies {
     api "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
+}
+
+
+publishing {
+
+    repositories {
+        mavenLocal() // ~/.m2
+    }
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.h4h4da2'
+            artifactId = 'andCommon'
+            version = 'v0.0.3-SNAPSHOT'
+            artifact "${project.buildDir}/outputs/aar/libs-debug.aar"
+        }
+    }
 }

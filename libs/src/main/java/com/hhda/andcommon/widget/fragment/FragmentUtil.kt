@@ -32,6 +32,7 @@ object FragmentUtil {
         val b = fragment.arguments ?: Bundle()
         val realTag = tag ?: "${TAG_PREFIX}${fragment.javaClass.simpleName}"
         b.putString(ARG_TAG, realTag)
+        fragment.arguments = b
     }
 
     fun getFragmentTag(fragment: Fragment?): String? {

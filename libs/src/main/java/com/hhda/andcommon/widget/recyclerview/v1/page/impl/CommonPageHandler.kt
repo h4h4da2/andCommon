@@ -56,12 +56,13 @@ class CommonPageHandler(
             if (pageData.isFirstPage) {
 
                 refreshLoadMoreView.setData(mData, true)
-                refreshLoadMoreView.binding.refreshLayout.finishRefresh(true)
+                refreshLoadMoreView.binding.refreshLayout.finishRefresh(300, true, !pageData.hasMore)
                 if (pageData.pageList.isNullOrEmpty()) {
                     refreshLoadMoreView.showEmpty()
                 } else {
                     refreshLoadMoreView.showContent()
                 }
+
             } else {
                 refreshLoadMoreView.setData(mData, false)
                 refreshLoadMoreView.showContent()
