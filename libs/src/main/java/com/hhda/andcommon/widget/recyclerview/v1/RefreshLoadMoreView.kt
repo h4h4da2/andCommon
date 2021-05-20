@@ -12,6 +12,7 @@ import com.hhda.andcommon.databinding.AcViewRefreshLoadLayoutBinding
 import com.hhda.andcommon.widget.statusview.v1.IViewRender
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
+import com.hhda.andcommon.widget.recyclerview.v1.page.PageData
 import com.hhda.andcommon.widget.recyclerview.v1.page.impl.CommonPageHandler
 import com.hhda.andcommon.widget.statusview.v1.IStatus
 
@@ -111,9 +112,9 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         binding.refreshLayout.setEnableLoadMore(false)
     }
 
-    fun onReqComplete(result: Any?, err: Any?) {
+    fun onReqComplete(pageData: PageData) {
         binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
-        mPageHandler?.onLoadComplete(result, err)
+        mPageHandler?.onLoadComplete(pageData)
     }
 
     fun showEmpty() {

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.arch.core.util.Function
 import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
+import com.hhda.andcommon.widget.recyclerview.v1.page.PageData
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
@@ -93,10 +94,12 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
             }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                binding.rlView.onReqComplete(it, null)
+                val pageData = WanAndroidPageManager.quickBuild(it, null, page)
+                binding.rlView.onReqComplete(pageData)
             },
                 {
-                    binding.rlView.onReqComplete(null, it)
+                    val pageData = WanAndroidPageManager.quickBuild(null, it, page)
+                    binding.rlView.onReqComplete(pageData)
                 })
 
 

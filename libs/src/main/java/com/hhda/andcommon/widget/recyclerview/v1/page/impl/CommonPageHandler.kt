@@ -4,6 +4,7 @@ package com.hhda.andcommon.widget.recyclerview.v1.page.impl
 import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageHandler
 import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
+import com.hhda.andcommon.widget.recyclerview.v1.page.PageData
 
 /**
  * 常规业务下的分页处理
@@ -27,14 +28,14 @@ class CommonPageHandler(
         pageManager.loadNextPage()
     }
 
-    override fun onLoadComplete(result: Any?, error: Any?) {
+    override fun onLoadComplete(pageData: PageData) {
 
-        val pageData = pageManager.handleResult(result, error)
+        pageManager.onLoadComplete(pageData)
 
         //加载失败情况
-        if (error != null) {
+        if (pageData.error != null) {
             if (pageData.isFirstPage) {
-                refreshLoadMoreView.showErr(error)
+                refreshLoadMoreView.showErr(pageData.error)
                 refreshLoadMoreView.binding.refreshLayout.finishRefresh(false)
             } else {
                 refreshLoadMoreView.binding.refreshLayout.finishLoadMore(false)
@@ -56,7 +57,11 @@ class CommonPageHandler(
             if (pageData.isFirstPage) {
 
                 refreshLoadMoreView.setData(mData, true)
-                refreshLoadMoreView.binding.refreshLayout.finishRefresh(300, true, !pageData.hasMore)
+                refreshLoadMoreView.binding.refreshLayout.finishRefresh(
+                    300,
+                    true,
+                    !pageData.hasMore
+                )
                 if (pageData.pageList.isNullOrEmpty()) {
                     refreshLoadMoreView.showEmpty()
                 } else {
@@ -74,8 +79,8 @@ class CommonPageHandler(
                 }
             }
         }
-
     }
+
 
     override fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>) {
         mData = reduce.apply(mData)

@@ -4,7 +4,7 @@ interface IPageHandler {
 
     fun onLoadStart(isRefresh: Boolean)
 
-    fun onLoadComplete(result: Any?, error: Any?)
+    fun onLoadComplete(pageData: PageData)
 
     fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>)
 
