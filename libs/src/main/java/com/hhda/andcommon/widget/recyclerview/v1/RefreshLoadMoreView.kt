@@ -113,7 +113,11 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
     fun onReqComplete(pageData: PageData) {
-        binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
+        if (pageData.isFirstPage && pageData.error != null) {
+            binding.refreshLayout.setEnableLoadMore(false)
+        } else {
+            binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
+        }
         mPageHandler?.onLoadComplete(pageData)
     }
 

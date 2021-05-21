@@ -115,7 +115,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.github.h4h4da2'
             artifactId = 'andCommon'
-            version = 'v0.0.3-SNAPSHOT'
+            version = 'v0.0.1-SNAPSHOT'
             artifact "${project.buildDir}/outputs/aar/libs-debug.aar"
         }
     }
