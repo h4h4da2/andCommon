@@ -4,6 +4,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.widget.addTextChangedListener
 
 class SearchBarUtil {
 
@@ -49,6 +50,14 @@ class SearchBarUtil {
         this.hideClearBtnWhenInput = hideClearBtnWhenInput
         mClearBtn?.setOnClickListener { setText("") }
         updateClearBtnWhenInput(getInputText())
+    }
+
+
+    fun bindEditText(editText: EditText) {
+        this.mEditText = editText
+        mEditText?.addTextChangedListener { str ->
+            updateClearBtnWhenInput(str?.toString())
+        }
     }
 
     fun setClearBtnVisible(show: Boolean) {
