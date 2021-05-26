@@ -105,6 +105,10 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     fun setData(data: List<Any>, needScroll2Top: Boolean) {
         binding.recyclerView.setDiffData(data, needScroll2Top)
     }
+    
+    fun getData(): List<Any> {
+        return getAdapter().data
+    }
 
 
     fun refresh() {
@@ -113,7 +117,8 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
     fun onReqComplete(pageData: PageData) {
-        if (pageData.isFirstPage && pageData.error != null) {
+        if (pageData.isFirstPage && (pageData.error != null || pageData.pageList.isNullOrEmpty())) {
+            //第一页加载失败，或者没有数据，禁止loadMore
             binding.refreshLayout.setEnableLoadMore(false)
         } else {
             binding.refreshLayout.setEnableLoadMore(mEnableLoadMore)
