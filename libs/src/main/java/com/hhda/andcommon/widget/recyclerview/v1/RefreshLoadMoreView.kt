@@ -105,7 +105,7 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     fun setData(data: List<Any>, needScroll2Top: Boolean) {
         binding.recyclerView.setDiffData(data, needScroll2Top)
     }
-    
+
     fun getData(): List<Any> {
         return getAdapter().data
     }
