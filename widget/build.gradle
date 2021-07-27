@@ -59,3 +59,19 @@ dependencies {
 
     api project(":libs")
 }
+
+
+publishing {
+
+//    repositories {
+//        mavenLocal() // ~/.m2
+//    }
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.h4h4da2'
+            artifactId = 'widget'
+            version = 'v0.0.2-SNAPSHOT'
+            artifact "${project.buildDir}/outputs/aar/libs-debug.aar"
+        }
+    }
+}

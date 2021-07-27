@@ -108,14 +108,14 @@ dependencies {
 
 publishing {
 
-    repositories {
-        mavenLocal() // ~/.m2
-    }
+//    repositories {
+//        mavenLocal() // ~/.m2
+//    }
     publications {
         maven(MavenPublication) {
             groupId = 'com.github.h4h4da2'
-            artifactId = 'andCommon'
-            version = 'v0.0.1-SNAPSHOT'
+            artifactId = 'baselib'
+            version = 'v0.0.2-SNAPSHOT'
             artifact "${project.buildDir}/outputs/aar/libs-debug.aar"
         }
     }
