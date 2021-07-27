@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.arch.core.util.Function
-import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
-import com.hhda.andcommon.widget.recyclerview.v1.page.PageData
+import com.hhda.widget.recyclerview.v1.RefreshLoadMoreView
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient

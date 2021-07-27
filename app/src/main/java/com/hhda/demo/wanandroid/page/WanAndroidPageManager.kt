@@ -1,7 +1,7 @@
 package com.hhda.demo.wanandroid.page
 
-import com.hhda.andcommon.widget.recyclerview.v1.page.IPageManager
-import com.hhda.andcommon.widget.recyclerview.v1.page.PageData
+import com.hhda.widget.recyclerview.v1.page.IPageManager
+import com.hhda.widget.recyclerview.v1.page.PageData
 import com.hhda.demo.dto.PageResult
 
 class WanAndroidPageManager(private val loadFunc: (Any) -> Unit) : IPageManager {

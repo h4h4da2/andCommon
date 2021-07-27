@@ -1,3 +1,5 @@
 rootProject.name = "AndCommon"
 include ':app'
 include ':libs'
+include ':pay'
+include ':widget'

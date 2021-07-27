@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hhda.andcommon.util.dp2px
 import com.hhda.andcommon.util.ifShow
 import com.hhda.andcommon.util.inflateViewFromParent
-import com.hhda.andcommon.widget.circleimage.v1.CircleImageView
+import com.hhda.widget.circleimage.v1.CircleImageView
 import com.hhda.demo.R
 import com.hhda.demo.dto.ArticleDTO
 
