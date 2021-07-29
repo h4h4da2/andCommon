@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.github.dcendents.android-maven'
-    id 'maven-publish'
 }
 
 android {
@@ -43,24 +41,4 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    compileOnly(name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
-
-//    api project(":libs")
-}
-
-
-publishing {
-
-    repositories {
-        mavenLocal() // ~/.m2
-    }
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.h4h4da2'
-            artifactId = 'pay'
-            version = 'v0.0.3-SNAPSHOT'
-            artifact "${project.buildDir}/outputs/aar/pay-debug.aar"
-        }
-    }
 }
