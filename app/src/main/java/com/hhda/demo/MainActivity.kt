@@ -12,6 +12,10 @@ import android.view.MenuItem
 import com.blankj.utilcode.util.PermissionUtils
 import com.hhda.andcommon.R
 import com.hhda.demo.databinding.ActivityMainBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +30,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        GlobalScope.launch(Dispatchers.IO) {
 
+
+        }
+
+        runBlocking {  }
 
     }
 

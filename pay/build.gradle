@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.github.dcendents.android-maven'
-    id 'maven-publish'
+//    id 'com.github.dcendents.android-maven'
+//    id 'maven-publish'
 }
+
+apply from: "${rootDir.path}/gradle/publish.gradle"
 
 android {
     compileSdkVersion 30
@@ -50,17 +52,17 @@ dependencies {
 }
 
 
-publishing {
-
-    repositories {
-        mavenLocal() // ~/.m2
-    }
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.h4h4da2'
-            artifactId = 'pay'
-            version = 'v0.0.3-SNAPSHOT'
-            artifact "${project.buildDir}/outputs/aar/pay-debug.aar"
-        }
-    }
-}
+//publishing {
+//
+//    repositories {
+//        mavenLocal() // ~/.m2
+//    }
+//    publications {
+//        maven(MavenPublication) {
+//            groupId = 'com.github.h4h4da2'
+//            artifactId = 'pay'
+//            version = 'v0.0.3-SNAPSHOT'
+//            artifact "${project.buildDir}/outputs/aar/pay-debug.aar"
+//        }
+//    }
+//}
