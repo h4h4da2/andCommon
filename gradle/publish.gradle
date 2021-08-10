@@ -5,8 +5,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-
-                group = PROJ_GROUP
+                groupId = PROJ_GROUP
                 artifactId = PROJ_ARTIFACTID
                 version = PROJ_VERSION
 
