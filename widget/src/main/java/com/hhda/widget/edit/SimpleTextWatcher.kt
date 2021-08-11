@@ -1,4 +1,4 @@
-package com.hhda.widget.searchbar
+package com.hhda.widget.edit
 
 import android.text.Editable
 import android.text.TextWatcher

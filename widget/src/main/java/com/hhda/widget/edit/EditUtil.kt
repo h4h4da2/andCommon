@@ -1,48 +1,29 @@
-package com.hhda.widget.searchbar
+package com.hhda.widget.edit
 
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 
-class SearchBarUtil {
+class EditUtil {
 
 
     var mEditText: EditText? = null
     var mClearBtn: View? = null
     var mShowPasswordBtn: View? = null
-    private var isShowPassword = true
+    private var isShowPassword = false
 
     private var hideClearBtnWhenInput: Boolean = true
 
-    /**
-     * 隐藏和显示密码的icon
-     */
-    private var showPasswordIcon = -1
-    private var hidePasswordIcon = -1
+    private var hideClearBtnRender: Consumer2<View, Boolean>? = null
+
+    private var showPasswordRender: Consumer2<View, Boolean>? = null
 
     /**
      * 清除输入的icon
      */
     private var clearInputIcon = -1
 
-//    init {
-//        mEditText?.addTextChangedListener(object : SimpleTextWatcher() {
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                updateClearBtnWhenInput(s.toString())
-//            }
-//        })
-//
-//        mClearBtn?.setOnClickListener {
-//            mEditText?.setText("")
-//            mClearBtn?.visibility = View.GONE
-//        }
-//        mShowPasswordBtn?.setOnClickListener {
-//            mShowPasswordBtn
-//        }
-//        updateClearBtnWhenInput(getInputText())
-////        updateShowPwsBtnWhenClick(isShowPassword)
-//    }
 
     fun bindClearBtn(clearBtn: View, hideWhenInput: Boolean) {
         this.mClearBtn = clearBtn
@@ -66,23 +47,22 @@ class SearchBarUtil {
         }
     }
 
-//    fun bindShowPasswordBtn(
-//        showPwdBtn: ImageView,
-//        showPwdRes: Int,
-//        hidePwdRes: Int,
-//        isShowPwd: Boolean = false
-//    ) {
-//        this.mShowPasswordBtn = showPwdBtn
-//        this.isShowPassword = isShowPwd
-//        this.showPasswordIcon = showPwdRes
-//        this.hidePasswordIcon = hidePwdRes
-//
-//        this.mShowPasswordBtn?.setOnClickListener {
-//            isShowPassword = !isShowPassword
-//            updateShowPwsBtnWhenClick(isShowPassword)
-//        }
-//        updateShowPwsBtnWhenClick(isShowPassword)
-//    }
+    fun bindShowPasswordBtn(
+        showPwdBtn: View,
+        isShowPwd: Boolean = false,
+        render: Consumer2<View, Boolean>? = null
+
+    ) {
+        this.mShowPasswordBtn = showPwdBtn
+        this.isShowPassword = isShowPwd
+        this.showPasswordRender = render
+
+        this.mShowPasswordBtn?.setOnClickListener {
+            isShowPassword = !isShowPassword
+            updateShowPwsBtnWhenClick(isShowPassword)
+        }
+        updateShowPwsBtnWhenClick(isShowPassword)
+    }
 
     fun setText(text: String?) {
         mEditText?.setText(text)
@@ -109,18 +89,17 @@ class SearchBarUtil {
         }
     }
 
-//    private fun updateShowPwsBtnWhenClick(showPwd: Boolean) {
-//        when (showPwd) {
-//            true -> {
-//                mShowPasswordBtn?.setImageResource(showPasswordIcon)
-//                mEditText.showPassword()
-//            }
-//            else -> {
-//                mShowPasswordBtn?.setImageResource(hidePasswordIcon)
-//                mEditText.hidePassword()
-//            }
-//        }
-//    }
+    private fun updateShowPwsBtnWhenClick(showPwd: Boolean) {
+        showPasswordRender?.accept(mShowPasswordBtn, showPwd)
+        when (showPwd) {
+            true -> {
+                mEditText?.showPassword()
+            }
+            else -> {
+                mEditText?.hidePassword()
+            }
+        }
+    }
 
     private fun EditText.showPassword() {
         inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
@@ -134,6 +113,10 @@ class SearchBarUtil {
         setSelection(length)
     }
 
+
+    interface Consumer2<A, B> {
+        fun accept(a: A?, b: B?)
+    }
 }
 
 
