@@ -11,7 +11,8 @@ import com.hhda.widget.recyclerview.v1.page.PageData
  */
 class CommonPageHandler(
     private val refreshLoadMoreView: RefreshLoadMoreView,
-    private val pageManager: IPageManager
+    private val pageManager: IPageManager,
+    private val dataReducer: androidx.arch.core.util.Function<List<Any>, List<Any>>?
 ) : IPageHandler {
 
     private var mData: List<Any> = emptyList()
@@ -84,6 +85,9 @@ class CommonPageHandler(
 
     override fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>) {
         mData = reduce.apply(mData)
+        dataReducer?.let {
+            mData = it.apply(mData)
+        }
         refreshLoadMoreView.setData(mData, false)
     }
 

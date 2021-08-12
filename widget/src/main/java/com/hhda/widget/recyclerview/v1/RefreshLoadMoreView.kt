@@ -81,8 +81,11 @@ class RefreshLoadMoreView @JvmOverloads constructor(
     }
 
 
-    fun setDefaultPageHandler(pageManager: IPageManager) {
-        this.mPageHandler = CommonPageHandler(this, pageManager)
+    fun setDefaultPageHandler(
+        pageManager: IPageManager,
+        dataReducer: Function<List<Any>, List<Any>>? = null
+    ) {
+        this.mPageHandler = CommonPageHandler(this, pageManager, dataReducer)
     }
 
     fun setPageHandler(pageHandler: IPageHandler) {
