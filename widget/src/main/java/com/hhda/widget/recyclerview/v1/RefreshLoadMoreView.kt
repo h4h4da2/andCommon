@@ -85,6 +85,10 @@ class RefreshLoadMoreView @JvmOverloads constructor(
         this.mPageHandler = CommonPageHandler(this, pageManager)
     }
 
+    fun setPageHandler(pageHandler: IPageHandler) {
+        this.mPageHandler = pageHandler
+    }
+
 
     fun setRefreshEnable(enable: Boolean) {
         this.mEnableRefresh = enable
