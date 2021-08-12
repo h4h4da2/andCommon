@@ -57,6 +57,7 @@ class CommonPageHandler(
 
             if (pageData.isFirstPage) {
 
+                dataReducer?.let { mData = it.apply(mData) }
                 refreshLoadMoreView.setData(mData, true)
                 refreshLoadMoreView.binding.refreshLayout.finishRefresh(
                     300,
@@ -70,6 +71,7 @@ class CommonPageHandler(
                 }
 
             } else {
+                dataReducer?.let { mData = it.apply(mData) }
                 refreshLoadMoreView.setData(mData, false)
                 refreshLoadMoreView.showContent()
 
@@ -85,9 +87,7 @@ class CommonPageHandler(
 
     override fun onDataChange(reduce: androidx.arch.core.util.Function<List<Any>, List<Any>>) {
         mData = reduce.apply(mData)
-        dataReducer?.let {
-            mData = it.apply(mData)
-        }
+        dataReducer?.let { mData = it.apply(mData) }
         refreshLoadMoreView.setData(mData, false)
     }
 
