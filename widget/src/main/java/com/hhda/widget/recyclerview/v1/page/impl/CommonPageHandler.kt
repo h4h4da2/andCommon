@@ -58,7 +58,7 @@ class CommonPageHandler(
             if (pageData.isFirstPage) {
 
                 dataReducer?.let { mData = it.apply(mData) }
-                refreshLoadMoreView.setData(mData, true)
+                refreshLoadMoreView.setData(mData, pageData.scroll2TopWhenRefresh)
                 refreshLoadMoreView.binding.refreshLayout.finishRefresh(
                     300,
                     true,

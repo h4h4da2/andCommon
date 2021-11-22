@@ -6,6 +6,7 @@ class PageData(
     val hasMore: Boolean,
     val error: Any?,
     // 根据业务场景存放一些数据
-    val obj: Any? = null
+    val obj: Any? = null,
+    val scroll2TopWhenRefresh: Boolean = true
 ) {
 }

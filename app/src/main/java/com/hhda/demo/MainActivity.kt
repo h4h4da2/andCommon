@@ -9,13 +9,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.hhda.andcommon.R
 import com.hhda.demo.databinding.ActivityMainBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        runBlocking { }
+
 
     }
 

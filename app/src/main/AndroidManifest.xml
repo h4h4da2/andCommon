@@ -35,7 +35,7 @@
         </activity>
 
 
-        <activity android:name=".RouterActivity">
+        <activity android:name=".demo.RouterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
