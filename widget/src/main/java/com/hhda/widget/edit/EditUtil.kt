@@ -25,9 +25,9 @@ class EditUtil {
     private var clearInputIcon = -1
 
 
-    fun bindClearBtn(clearBtn: View, hideWhenInput: Boolean) {
+    fun bindClearBtn(clearBtn: View) {
         this.mClearBtn = clearBtn
-        this.hideClearBtnWhenInput = hideClearBtnWhenInput
+//        this.hideClearBtnWhenInput = hideWhenInput
         mClearBtn?.setOnClickListener { setText("") }
         updateClearBtnWhenInput(getInputText())
     }
@@ -83,7 +83,7 @@ class EditUtil {
     }
 
     private fun updateClearBtnWhenInput(input: String?) {
-        when (input.isNullOrEmpty() && hideClearBtnWhenInput) {
+        when (input.isNullOrEmpty()) {
             true -> mClearBtn?.visibility = View.GONE
             else -> mClearBtn?.visibility = View.VISIBLE
         }
