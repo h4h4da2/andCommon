@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.arch.core.util.Function
-import com.hhda.andcommon.widget.recyclerview.v1.RefreshLoadMoreView
+import com.hhda.widget.recyclerview.v1.RefreshLoadMoreView
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityWanAndroidArticleListBinding
 import com.hhda.demo.network.NetClient
@@ -78,7 +78,7 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-//        binding.rlView.refresh()
+        binding.rlView.refresh()
     }
 
     private fun fetchData(page: Any) {
@@ -92,9 +92,14 @@ class WanAndroidArticleListActivity : AppCompatActivity() {
                 }
             }
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                binding.rlView.onReqComplete(it, null)
-            }
+            .subscribe({
+                val pageData = WanAndroidPageManager.quickBuild(it, null, page)
+                binding.rlView.onReqComplete(pageData)
+            },
+                {
+                    val pageData = WanAndroidPageManager.quickBuild(null, it, page)
+                    binding.rlView.onReqComplete(pageData)
+                })
 
 
     }

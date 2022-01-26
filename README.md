@@ -2,9 +2,11 @@
 
 
 
+[![](https://jitpack.io/v/h4h4da2/andCommon.svg)](https://jitpack.io/#h4h4da2/andCommon)
+
 1. #### 关于本项目
 
-   - 对以前项目内的组件进行整理，进行二次封装，方便之后快速立项迭代。使用了wanAndroid 网站提供的api作为数据源，进行相关的测试，开发以及数据展示（感谢wanAndroid网站）。
+   - 对以前项目内的组件进行整理，进行二次封装，方便之后快速立项迭代。
    - 对于一些新框架尝鲜和探索。
 
 2. #### 项目内的组件
@@ -15,3 +17,21 @@
    4. 全局状态管理组件（待开发）
    5. kotlin 相关的拓展
    6. 待添加...
+   
+3. #### 引用
+
+
+   ```
+   allprojects {
+   	repositories {
+   		...
+   		maven { url 'https://jitpack.io' }
+   	}
+   }
+   
+   dependencies {
+   
+       implementation 'com.github.h4h4da2:andCommon:version'
+   }
+   ```
+

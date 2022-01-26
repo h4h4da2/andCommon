@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.hhda.andcommon.widget.fragment.FragmentUtil
+import com.hhda.widget.fragment.FragmentUtil
 import com.hhda.demo.R
 import com.hhda.demo.databinding.ActivityPagerDemoActivityBinding
 import com.hhda.demo.pagerdemo.frags.PagerFragments
